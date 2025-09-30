@@ -1,0 +1,21 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#map { position: absolute; inset: 40px 0 0 0; }
+#toolbar { position: absolute; top: 0; left: 0; right: 0; height: 40px; display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: #fff; border-bottom: 1px solid #eee; z-index: 2; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+#toolbar button { padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px; background: #f8f8f8; cursor: pointer; }
+#toolbar button.active { background: #0f62fe; color: #fff; border-color: #0f62fe; }
+#btn-edit.active { background: #ff7f0e; border-color: #ff7f0e; color: #fff; }
+#btn-save:disabled, #btn-cancel:disabled { opacity: 0.5; cursor: not-allowed; }
+/* Zusätzliche Farbvorschau: optional individuelle Buttonfarben */
+#btn-green.active { background: #2ecc71; border-color: #2ecc71; }
+#btn-yellow.active { background: #f1c40f; border-color: #f1c40f; color: #000; }
+#btn-red.active { background: #e74c3c; border-color: #e74c3c; }
+#btn-remove.active { background: #888; border-color: #888; }
+/* Datei-Buttons visuell leicht absetzen */
+#btn-export, #btn-import { margin-left: 8px; }
+
+
+

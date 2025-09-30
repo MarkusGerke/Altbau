@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architektour – MVP Gebäudeauswahl</title>
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toolbar">
+    <button id="btn-edit" class="active">Bearbeiten</button>
+    <button id="btn-save" disabled>Speichern</button>
+    <button id="btn-cancel" disabled>Abbrechen</button>
+    <button id="btn-export">Export</button>
+    <button id="btn-import">Import</button>
+    <button id="btn-green">Gründerzeit (erhalten)</button>
+    <button id="btn-yellow">Gründerzeit (entstuckt)</button>
+    <button id="btn-red">Rot</button>
+    <button id="btn-remove">Entfernen</button>
+  </div>
+  <input id="import-file" type="file" accept="application/json" style="display:none" />
+  <div id="map"></div>
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/osmtogeojson@3.0.0-beta.5/osmtogeojson.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
