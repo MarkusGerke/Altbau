@@ -7,6 +7,9 @@ playwright-report
 trace
 *.log
 
+# Deployment config (enthält sensible Daten)
+.deploy-config
+
 # OS / Editor
 .DS_Store
 .vscode

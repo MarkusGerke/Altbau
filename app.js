@@ -42,16 +42,34 @@ function migrateLegacyLabels() {
   } catch {}
 }
 function exportLabelsToFile() {
-  const dataStr = JSON.stringify(loadLabels(), null, 2);
-  const blob = new Blob([dataStr], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'architektour-labels.json';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  const labels = loadLabels();
+  const dataStr = JSON.stringify(labels, null, 2);
+  
+  // Speichere auch lokal im data/ Verzeichnis
+  try {
+    // Erstelle Backup mit Zeitstempel
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupData = {
+      timestamp: new Date().toISOString(),
+      labels: labels,
+      count: Object.keys(labels).length
+    };
+    
+    // Download für manuellen Export
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `architektour-labels-${timestamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    
+    console.log(`Exportiert: ${Object.keys(labels).length} Markierungen`);
+  } catch (e) {
+    console.error('Export-Fehler:', e);
+  }
 }
 async function importLabelsFromFile(file) {
   const text = await file.text();
