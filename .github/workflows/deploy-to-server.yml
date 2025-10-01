@@ -20,6 +20,18 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            # Erstelle Zielverzeichnis falls nicht vorhanden
+            mkdir -p ${{ secrets.SERVER_PATH }}
             cd ${{ secrets.SERVER_PATH }}
-            git pull origin main
+            
+            # Git-Repository initialisieren oder aktualisieren
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://github.com/MarkusGerke/Architektour.git
+            fi
+            
+            # Aktualisiere Code
+            git fetch origin
+            git reset --hard origin/main
+            
             echo "Deployment erfolgreich!"
