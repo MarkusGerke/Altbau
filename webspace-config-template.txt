@@ -1,0 +1,54 @@
+# Altbau Webspace Konfiguration Template
+# Kopieren Sie diese Werte in Ihre Scripts
+
+# === IHRE WEBSPACE-DATEN ===
+# Ersetzen Sie die Platzhalter mit Ihren echten Daten:
+
+WEBSPACE_HOST="IHRE-DOMAIN.de"                    # z.B. "meine-domain.de" oder "123.456.789.123"
+WEBSPACE_USER="IHRE-BENUTZERNAME"                  # z.B. "web12345" oder "ihr-username"
+WEBSPACE_PATH="/htdocs/"                           # Meist "/htdocs/" oder "/www/" oder "/public_html/"
+WEBSPACE_PORT="22"                                 # Meist 22, manchmal 2222
+
+# === DATENBANK-DATEN ===
+DB_NAME="altbau_db"                                # Kann bleiben
+DB_USER="DATABASE_BENUTZERNAME"                    # Ihr MySQL-Benutzer
+DB_PASS="DATABASE_PASSWORT"                       # Ihr MySQL-Passwort
+
+# === VERWENDUNGS-ANLEITUNG ===
+# 1. Kopieren Sie die Werte oben für Ihre Scripts:
+#    - deploy-webspace.sh (Zeilen 8-12 ändern)
+#    - webspace-setup.sh (Zeilen 8-15 ändern)
+#
+# 2. SSH-Schlüssel hinzufügen:
+#    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOpOCcnjXqcsuS/ahYsTQ0MjzY7e/49pnSIOm9oASsE altbau-webspace-deploy
+#
+# 3. Test ausführen:
+#    ./deploy-webspace.sh test
+#
+# 4. Setup ausführen:
+#    ./webspace-setup.sh full
+#
+# 5. Deployen:
+#    ./deploy-netlify.sh deploy
+
+# === HILFE FÜR HÄUFIGE WEBSPACE-ANBIETER ===
+#
+# All-Inklusive/Cost Domain/Knipp Medien:
+# WEBSPACE_PATH="/htdocs/"
+# WEBSPACE_PORT="22"
+#
+# STRATO:
+# WEBSPACE_PATH="/html/"
+# WEBSPACE_PORT="22"
+#
+# 1&1 IONOS:
+# WEBSPACE_PATH="/htdocs/"
+# WEBSPACE_PORT="22"
+#
+# Hetzner:
+# WEBSPACE_PATH="/var/www/html/"
+# WEBSPACE_PORT="22"
+#
+# Hostinger:
+# WEBSPACE_PATH="/public_html/"
+# WEBSPACE_PORT="22"

@@ -21,41 +21,44 @@ Ein interaktives Karten-Tool zur Klassifizierung von Gebäuden in Berlin.
 
 - Standard Demo verwendet kostenlose MapTiler Tiles (Provider können gewechselt werden). Fügen Sie Ihren eigenen API-Key hinzu.
 
-## Deployment direkt zu Netlify
+## Deployment ausschließlich zu Ihrem Webspace
 
-Dieses Projekt ist für **direktes Netlify-Deployment** konfiguriert - ohne GitHub als Zwischenschritt.
+Dieses Projekt ist für **Webspace-Only-Deployment** konfiguriert. Netlify wird nur als Auslöser verwendet, alle Inhalte leben ausschließlich auf **Ihrem Webspace**.
 
 ### Erste Einrichtung auf Netlify
 
 1. **Account erstellen**
    - Gehen Sie zu [netlify.com](https://netlify.com) und erstellen Sie einen kostenlosen Account
    
-2. **Netlify CLI installieren**
+2. **Webspace-Setup**
    ```bash
-   npm install -g netlify-cli
-   ```
-
-3. **Bei Netlify anmelden**
-   ```bash
-   netlify login
-   ```
-
-4. **Site erstellen oder verknüpfen**
-   ```bash
-   # Neue Site erstellen:
-   ./deploy-netlify.sh create
+   # SSH-Schlüssel anzeigen (zu kopieren):
+   cat ~/.ssh/webspace_deploy_altbau.pub
    
-   # Oder mit bestehender Site verknüpfen:
-   ./deploy-netlify.sh link
+   # Kopieren Sie diesen Schlüssel zu Ihrem Webspace in ~/.ssh/authorized_keys
    ```
 
-5. **Direktes Deployment**
+3. **Webspace-Deployment konfigurieren**
    ```bash
-   # Produktions-Deployment:
-   ./deploy-netlify.sh deploy
+   # Bearbeiten Sie die Webspace-Daten:
+   nano deploy-webspace-only.sh
    
-   # Oder Draft-Version testen:
-   ./deploy-netlify.sh draft
+   # Ihre Daten eintragen (Host, User, Pfad)
+   ```
+
+4. **Infrastruktur einrichten**
+   ```bash
+   # Test der SSH-Verbindung:
+   ./deploy-webspace-only.sh test
+   
+   # Automatisches Setup (MySQL, API, etc.):
+   ./deploy-webspace-only.sh setup
+   ```
+
+5. **Deployment zu Ihrem Webspace**
+   ```bash
+   # Deployt AUSSCHLIESSLICH zu Ihrem Webspace:
+   ./deploy-webspace-only.sh deploy
    ```
 
 ### Netlify-Konfiguration
@@ -67,32 +70,35 @@ Das Projekt enthält bereits diese Netlify-Konfigurationsdateien:
 - `_redirects` - Umleitungssystem
 - `netlify/functions/` - Verzeichnis für zukünftige Serverless-Funktionen
 
-### Workflow ohne GitHub
+### Webspace-Only Workflow
 
-**Vorteile des direkten Netlify-Deployments:**
-- ✅ **Kein GitHub-Zwischenschritt** - direkter Push zu Netlify
-- ✅ **Schnellere Deployments** - keine Wartezeit auf GitHub Actions
-- ✅ **Einfachere Konfiguration** - weniger Abhängigkeiten
-- ✅ **Lokale Kontrolle** - Sie entscheiden wann deployed wird
-- ✅ **Draft-Versionen** - Testen vor Live-Schaltung möglich
+**Vorteile des Webspace-Only-Deployments:**
+- ✅ **Ihre Domain** - alles läuft auf Ihrer eigenen Domain
+- ✅ **Volle Kontrolle** - Ihr Webspace, Ihre Datenbank, Ihre Infrastruktur
+- ✅ **Keine Subdomains** - keine Netlify-URLs, nur Ihre Domain
+- ✅ **Datenbankintegration** - vollständige MySQL-Integration
+- ✅ **SSL-Traktion** - alles über Ihr eigenes SSL-Zertifikat
 
-**Typischer Workflow:**
+**Ihr neuer Workflow:**
 ```bash
 # 1. Code ändern
-# 2. Testen (optional)
-./deploy-netlify.sh draft
+# 2. Lokal testen (optional):
+python3 -m http.server 8080
 
-# 3. Live-Deployment
-./deploy-netlify.sh deploy
+# 3. Zu Ihrem Webspace deployen:
+./deploy-webspace-only.sh deploy
+
+# Ergebnis: https://IHRE-DOMAIN.de (keine Netlify-URL!)
 ```
 
-### Custom Domain (Optional)
+### Ihre Domain ist bereits Ihr Ziel
 
-Um Ihre eigene Domain zu verwenden:
+Da alles auf Ihrem Webspace läuft, verwenden Sie **automatisch Ihre eigene Domain**:
+- 🌐 **Hauptsite**: `https://IHRE-DOMAIN.de`
+- 🗄️ **API-Endpunkte**: `https://IHRE-DOMAIN.de/api/labels.php`
+- 📊 **Datenbank**: Läuft auf Ihrem Webspace mit MySQL
 
-1. Besorgen Sie sich eine Domain
-2. In Netlify Dashboard: Site settings → Domain management → Add custom domain
-3. Folgen Sie den DNS-Konfigurationsanweisungen
+**Keine Konfiguration nötig** - Sie verwenden bereits Ihre Domain! 🎯
 
 ## Lokale Entwicklung
 

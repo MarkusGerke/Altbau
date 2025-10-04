@@ -15,11 +15,11 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    console.log('🚀 Starte SSH-Deployment zu Webspace...');
+    console.log('🚀 Starte SSH-Deployment ZU WEBSPACE (Netlify wird NICHT deployed)...');
     
-    // SSH-Deployment-Befehl ausführen
+    // SSH-Deployment-Befehl ausführen (nur zu Webspace)
     const deployCommand = `
-      # Synchronisiere mit Webspace
+      # Nur zu Webspace deployen - Netlify wird übersprungen
       rsync -avz --delete \\
         -e "ssh -o StrictHostKeyChecking=no" \\
         --include='*.html' \\
@@ -47,16 +47,16 @@ exports.handler = async (event, context) => {
 
     await execAsync(deployCommand);
     
-    console.log('✅ SSH-Deployment erfolgreich abgeschlossen');
+    console.log('✅ SSH-Deployment zu Webspace erfolgreich abgeschlossen (Netlify übersprungen)');
     
     return {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        message: 'Deployment zu Netlify und Webspace erfolgreich',
+        message: 'Deployment AUSSCHLIESSLICH zu Webspace erfolgreich',
         timestamp: new Date().toISOString(),
-        netlify_url: process.env.URL,
-        webspace_url: `https://${process.env.WEBSPACE_HOST}`
+        webspace_url: `https://${process.env.WEBSPACE_HOST}`,
+        note: 'Netlify-Deployment wurde bewusst übersprungen - Webspace ist Hauptziel'
       })
     };
     
