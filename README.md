@@ -21,9 +21,9 @@ Ein interaktives Karten-Tool zur Klassifizierung von Gebäuden in Berlin.
 
 - Standard Demo verwendet kostenlose MapTiler Tiles (Provider können gewechselt werden). Fügen Sie Ihren eigenen API-Key hinzu.
 
-## Deployment auf Netlify
+## Deployment auf Netlify + Webspace
 
-Dieses Projekt ist jetzt für **Netlify** konfiguriert und sollte nicht mehr über GitHub Pages deployed werden.
+Dieses Projekt ist für **Netlify** konfiguriert und zusätzlich für **automatisches SSH-Deployment** zu Ihrem Webspace.
 
 ### Erste Einrichtung auf Netlify
 
@@ -53,6 +53,47 @@ Das Projekt enthält bereits diese Netlify-Konfigurationsdateien:
 - `_headers` - HTTP-Header für Performance und Sicherheit  
 - `_redirects` - Umleitungssystem
 - `netlify/functions/` - Verzeichnis für zukünftige Serverless-Funktionen
+
+### SSH-Deployment zu Webspace
+
+Das Projekt wird **automatisch** bei jedem `git push` sowohl zu Netlify als auch zu Ihrem Webspace deployed.
+
+#### Erste Einrichtung für Webspace-Deployment:
+
+1. **SSH-Schlüssel auf Webspace hinterlegen**
+   ```bash
+   # Öffentlichen Schlüssel anzeigen:
+   cat ~/.ssh/webspace_deploy_altbau.pub
+   ```
+   Kopieren Sie diesen Schlüssel und fügen Sie ihn in `~/.ssh/authorized_keys` auf Ihrem Webspace ein.
+
+2. **GitHub Secrets konfigurieren**
+   Gehen Sie zu: https://github.com/MarkusGerke/Altbau/settings/secrets/actions
+   
+   Fügen Sie diese Secrets hinzu:
+   - `WEBSPACE_HOST`: Ihre Domain (z.B. `example.com`)
+   - `WEBSPACE_USER`: Ihr SSH-Benutzername
+   - `WEBSPACE_PATH`: Pfad zum Website-Verzeichnis (z.B. `/var/www/html/`)
+   - `WEBSPACE_SSH_KEY`: Inhalt von `~/.ssh/webspace_deploy_altbau` (privater Schlüssel)
+
+3. **Manueller Test (optional)**
+   ```bash
+   # Script konfigurieren:
+   nano deploy-webspace.sh
+   
+   # Verbindung testen:
+   ./deploy-webspace.sh test
+   
+   # Manuell deployen:
+   ./deploy-webspace.sh deploy
+   ```
+
+#### Automatisches Deployment
+
+Bei jedem `git push` zu `main`:
+- ✅ **Netlify** wird automatisch aktualisiert
+- ✅ **Webspace** wird automatisch via SSH aktualisiert
+- ✅ Beide Deployments laufen parallel
 
 ### Custom Domain (Optional)
 
@@ -90,6 +131,7 @@ Falls Sie bisher GitHub Pages verwendet haben:
    - HTTPS automatisch aktiviert
    - Einfache Custom Domains
    - Serverless Functions verfügbar
+   - **Doppeltes Backup**: Netlify + eigener Webspace
 
 
 
