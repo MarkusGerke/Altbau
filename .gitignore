@@ -14,3 +14,6 @@ trace
 .DS_Store
 .vscode
 .idea
+
+# Local Netlify folder
+.netlify

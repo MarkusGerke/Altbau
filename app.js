@@ -1,6 +1,6 @@
 /* Fresh MVP: OSM buildings (Overpass), per-building select, color class, 3D for green/yellow */
 
-const STORAGE_KEY = "architektour:labels";
+const STORAGE_KEY = "altbau:labels";
 const MAPTILER_KEY = "r1y4IRNqsEQ6iXZSMNWr";
 const berlinCenter = [13.404954, 52.520008];
 
@@ -38,7 +38,7 @@ function migrateLegacyLabels() {
   const changed = JSON.stringify(original) !== JSON.stringify(migrated);
   if (changed) saveLabels(migrated);
   try {
-    console.info('[architektour] Labels Migration:', { removedValues, normalizedKeys, kept, totalAfter: Object.keys(migrated).length });
+    console.info('[altbau] Labels Migration:', { removedValues, normalizedKeys, kept, totalAfter: Object.keys(migrated).length });
   } catch {}
 }
 function exportLabelsToFile() {
@@ -60,7 +60,7 @@ function exportLabelsToFile() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `architektour-labels-${timestamp}.json`;
+    a.download = `altbau-labels-${timestamp}.json`;
     document.body.appendChild(a);
     a.click();
     a.remove();

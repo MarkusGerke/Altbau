@@ -1,4 +1,4 @@
-# Netlify-Konfiguration für Architektour
+# Netlify-Konfiguration für Altbau
 [build]
   # Basis-Verzeichnis (Wurzel des Projekts)
   base      = ""

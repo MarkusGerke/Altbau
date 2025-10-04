@@ -1,4 +1,4 @@
-# Architektour: Berlin Building Classification Tool
+# Altbau: Berlin Building Classification Tool
 
 Ein interaktives Karten-Tool zur Klassifizierung von Gebäuden in Berlin.
 
@@ -32,7 +32,7 @@ Dieses Projekt ist jetzt für **Netlify** konfiguriert und sollte nicht mehr üb
    
 2. **Projekt verbinden**
    - Loggen Sie sich bei Netlify ein und klicken Sie auf "Add new site" → "Import an existing project"
-   - Verbinden Sie Ihr GitHub Repository: `MarkusGerke/Architektour`
+   - Verbinden Sie Ihr GitHub Repository: `MarkusGerke/Altbau`
    - Oder ziehen Sie den `_site` Ordner direkt per Drag & Drop in Netlify
 
 3. **Build-Einstellungen konfigurieren**
@@ -71,7 +71,7 @@ Um Ihre eigene Domain zu verwenden:
 
 ## Produktions-Notizen
 
-- Ihre Klassifizierungsdaten werden unter dem Schlüssel `architektour:labels` in localStorage gespeichert
+- Ihre Klassifizierungsdaten werden unter dem Schlüssel `altbau:labels` in localStorage gespeichert
 - Export erstellt eine JSON-Datei; Import akzeptiert das gleiche Format
 - Alle Konfigurationen sind bereits für Netlify optimiert
 

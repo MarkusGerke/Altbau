@@ -1,4 +1,4 @@
-# Netlify Redirects für Architektour
+# Netlify Redirects für Altbau
 # Diese Datei definiert Umleitungen und Rewrite-Regeln
 
 # SPA-Routing: Alle unbekannten Pfade zur index.html weiterleiten
