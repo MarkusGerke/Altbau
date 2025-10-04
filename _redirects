@@ -1,0 +1,9 @@
+# Netlify Redirects für Architektour
+# Diese Datei definiert Umleitungen und Rewrite-Regeln
+
+# SPA-Routing: Alle unbekannten Pfade zur index.html weiterleiten
+/*    /index.html   200
+
+# Bei Bedarf: Spezielle Umleitungen für legacy URLs (Beispiele)
+# /old-page    /new-page    301
+# /legacy/*    /new/*       301

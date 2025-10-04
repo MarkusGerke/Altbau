@@ -1,0 +1,42 @@
+# Netlify-Konfiguration für Architektour
+[build]
+  # Basis-Verzeichnis (Wurzel des Projekts)
+  base      = ""
+  # Build-Befehl (für dieses statische Projekt optional)
+  command   = "echo 'Statisches Projekt - kein Build erforderlich'"
+  # Verzeichnis mit den zu deployenden Dateien
+  publish   = ""
+
+[build.environment]
+  # Node.js Version (für etwaige Build-Dependencies)
+  NODE_VERSION = "20"
+
+# Umleitungen für SPA-Verhalten (falls benötigt)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers für besseres Performance und Sicherheit
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Caching für statische Ressourcen
+[[headers]]
+  for = "/styles.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/app.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Funktionen-Konfiguration (falls zukünftig benötigt)
+[functions]
+  directory = "netlify/functions"

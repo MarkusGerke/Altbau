@@ -1,0 +1,26 @@
+# Netlify Headers für Architektour
+# Diese Datei definiert HTTP-Header für verschiedene Dateien
+
+# Globale Header für alle Dateien
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  
+# CSS-Dateien optimieren
+/styles.css
+  Cache-Control: public, min-fresh=3600
+
+# JavaScript-Dateien optimieren  
+/app.js
+  Cache-Control: public, min-fresh=3600
+
+# HTML-Dateien
+*.html
+  Cache-Control: public, max-age=300
+
+# Serviere JSON-Dateien aus dem data/ Ordner
+/data/*
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
