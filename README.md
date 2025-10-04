@@ -21,29 +21,42 @@ Ein interaktives Karten-Tool zur Klassifizierung von Gebäuden in Berlin.
 
 - Standard Demo verwendet kostenlose MapTiler Tiles (Provider können gewechselt werden). Fügen Sie Ihren eigenen API-Key hinzu.
 
-## Deployment auf Netlify + Webspace
+## Deployment direkt zu Netlify
 
-Dieses Projekt ist für **Netlify** konfiguriert und zusätzlich für **automatisches SSH-Deployment** zu Ihrem Webspace.
+Dieses Projekt ist für **direktes Netlify-Deployment** konfiguriert - ohne GitHub als Zwischenschritt.
 
 ### Erste Einrichtung auf Netlify
 
 1. **Account erstellen**
    - Gehen Sie zu [netlify.com](https://netlify.com) und erstellen Sie einen kostenlosen Account
    
-2. **Projekt verbinden**
-   - Loggen Sie sich bei Netlify ein und klicken Sie auf "Add new site" → "Import an existing project"
-   - Verbinden Sie Ihr GitHub Repository: `MarkusGerke/Altbau`
-   - Oder ziehen Sie den `_site` Ordner direkt per Drag & Drop in Netlify
-
-3. **Build-Einstellungen konfigurieren**
-   ```
-   Build command: (leer lassen - statisches Projekt)
-   Publish directory: (leer lassen - root)
+2. **Netlify CLI installieren**
+   ```bash
+   npm install -g netlify-cli
    ```
 
-4. **Automatisches Deployment**
-   - Bei jedem `git push` zu Ihrem Repository wird automatisch ein neues Deployment erstellt
-   - Netlify erstellt eine eindeutige URL für Ihre Website (z.B. `https://courageous-croquembouche-123abc.netlify.app`)
+3. **Bei Netlify anmelden**
+   ```bash
+   netlify login
+   ```
+
+4. **Site erstellen oder verknüpfen**
+   ```bash
+   # Neue Site erstellen:
+   ./deploy-netlify.sh create
+   
+   # Oder mit bestehender Site verknüpfen:
+   ./deploy-netlify.sh link
+   ```
+
+5. **Direktes Deployment**
+   ```bash
+   # Produktions-Deployment:
+   ./deploy-netlify.sh deploy
+   
+   # Oder Draft-Version testen:
+   ./deploy-netlify.sh draft
+   ```
 
 ### Netlify-Konfiguration
 
@@ -54,46 +67,24 @@ Das Projekt enthält bereits diese Netlify-Konfigurationsdateien:
 - `_redirects` - Umleitungssystem
 - `netlify/functions/` - Verzeichnis für zukünftige Serverless-Funktionen
 
-### SSH-Deployment zu Webspace
+### Workflow ohne GitHub
 
-Das Projekt wird **automatisch** bei jedem `git push` sowohl zu Netlify als auch zu Ihrem Webspace deployed.
+**Vorteile des direkten Netlify-Deployments:**
+- ✅ **Kein GitHub-Zwischenschritt** - direkter Push zu Netlify
+- ✅ **Schnellere Deployments** - keine Wartezeit auf GitHub Actions
+- ✅ **Einfachere Konfiguration** - weniger Abhängigkeiten
+- ✅ **Lokale Kontrolle** - Sie entscheiden wann deployed wird
+- ✅ **Draft-Versionen** - Testen vor Live-Schaltung möglich
 
-#### Erste Einrichtung für Webspace-Deployment:
+**Typischer Workflow:**
+```bash
+# 1. Code ändern
+# 2. Testen (optional)
+./deploy-netlify.sh draft
 
-1. **SSH-Schlüssel auf Webspace hinterlegen**
-   ```bash
-   # Öffentlichen Schlüssel anzeigen:
-   cat ~/.ssh/webspace_deploy_altbau.pub
-   ```
-   Kopieren Sie diesen Schlüssel und fügen Sie ihn in `~/.ssh/authorized_keys` auf Ihrem Webspace ein.
-
-2. **GitHub Secrets konfigurieren**
-   Gehen Sie zu: https://github.com/MarkusGerke/Altbau/settings/secrets/actions
-   
-   Fügen Sie diese Secrets hinzu:
-   - `WEBSPACE_HOST`: Ihre Domain (z.B. `example.com`)
-   - `WEBSPACE_USER`: Ihr SSH-Benutzername
-   - `WEBSPACE_PATH`: Pfad zum Website-Verzeichnis (z.B. `/var/www/html/`)
-   - `WEBSPACE_SSH_KEY`: Inhalt von `~/.ssh/webspace_deploy_altbau` (privater Schlüssel)
-
-3. **Manueller Test (optional)**
-   ```bash
-   # Script konfigurieren:
-   nano deploy-webspace.sh
-   
-   # Verbindung testen:
-   ./deploy-webspace.sh test
-   
-   # Manuell deployen:
-   ./deploy-webspace.sh deploy
-   ```
-
-#### Automatisches Deployment
-
-Bei jedem `git push` zu `main`:
-- ✅ **Netlify** wird automatisch aktualisiert
-- ✅ **Webspace** wird automatisch via SSH aktualisiert
-- ✅ Beide Deployments laufen parallel
+# 3. Live-Deployment
+./deploy-netlify.sh deploy
+```
 
 ### Custom Domain (Optional)
 
@@ -131,7 +122,7 @@ Falls Sie bisher GitHub Pages verwendet haben:
    - HTTPS automatisch aktiviert
    - Einfache Custom Domains
    - Serverless Functions verfügbar
-   - **Doppeltes Backup**: Netlify + eigener Webspace
+   - **Direkter Workflow** ohne GitHub-Zwischenschritt
 
 
 
