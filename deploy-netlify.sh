@@ -7,41 +7,32 @@ NETLIFY_SITE_ID=""  # Wird automatisch erkannt wenn Site verknüpft ist
 NETLIFY_PRODUCTION_BRANCH="main"
 
 # === FUNKTIONEN ===
-function deploy_to_netlify() {
-    echo "🚀 Deploye Altbau direkt zu Netlify..."
+function deploy_to_netlify_and_webspace() {
+    echo "🚀 Deploye Altbau zu Netlify UND Webspace..."
     
-    # Prüfe ob Netlify CLI installiert ist
-    if ! command -v netlify &> /dev/null; then
-        echo "❌ Netlify CLI nicht gefunden. Installiere es mit:"
-        echo "   npm install -g netlify-cli"
-        exit 1
-    fi
-    
-    # Prüfe ob angemeldet
-    if ! netlify status &> /dev/null; then
-        echo "❌ Nicht bei Netlify angemeldet. Führen Sie 'netlify login' aus."
-        exit 1
-    fi
-    
-    # Prüfe ob Site verknüpft ist
-    if ! netlify status | grep -q "Linked to"; then
-        echo "🔗 Site nicht verknüpft. Verknüpfe mit bestehender Site..."
-        echo "Verfügbare Sites:"
-        netlify sites:list
-        echo ""
-        echo "Führen Sie 'netlify link' aus um eine Site zu verknüpfen."
-        exit 1
-    fi
-    
-    # Deploye zu Netlify
-    echo "📤 Deploye zu Netlify..."
+    # Erst zu Netlify deployen
+    echo "📤 Schritt 1: Deploye zu Netlify..."
     netlify deploy --prod
     
     if [ $? -eq 0 ]; then
-        echo "✅ Deployment erfolgreich!"
-        echo "🌐 Website verfügbar unter: $(netlify status | grep 'Live URL' | cut -d' ' -f3)"
+        echo "✅ Netlify-Deployment erfolgreich!"
+        
+        # Dann zum Webspace
+        echo "📤 Schritt 2: Deploye zu Webspace..."
+        
+        # Prüfe ob deploy-webspace.sh konfiguriert ist
+        if grep -q "IHRE-DOMAIN.de" deploy-webspace.sh; then
+            echo "⚠️ Bitte konfigurieren Sie zuerst deploy-webspace.sh mit Ihren Webspace-Daten!"
+            echo "Dann führen Sie aus: ./deploy-webspace.sh deploy"
+        else
+            echo "📤 Starte Webspace-Deployment..."
+            ./deploy-webspace.sh deploy
+        fi
+        
+        echo "🌐 Netlify: $(netlify status | grep 'Live URL' | cut -d' ' -f3)"
+        echo "🌐 Webspace: https://$(grep 'WEBSPACE_HOST=' deploy-webspace.sh | cut -d'"' -f2)"
     else
-        echo "❌ Deployment fehlgeschlagen!"
+        echo "❌ Netlify-Deployment fehlgeschlagen!"
         exit 1
     fi
 }
@@ -89,7 +80,7 @@ function show_help() {
 # === HAUPTMENÜ ===
 case "$1" in
     "deploy")
-        deploy_to_netlify
+        deploy_to_netlify_and_webspace
         ;;
     "draft")
         deploy_draft
